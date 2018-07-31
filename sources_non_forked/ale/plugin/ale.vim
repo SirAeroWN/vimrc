@@ -35,15 +35,11 @@ endif
 " Set this flag so that other plugins can use it, like airline.
 let g:loaded_ale = 1
 
-" Set the TMPDIR environment variable if it is not set automatically.
-" This can automatically fix some environments.
-if has('unix') && empty($TMPDIR)
-    let $TMPDIR = '/tmp'
-endif
-
 " This global variable is used internally by ALE for tracking information for
 " each buffer which linters are being run against.
 let g:ale_buffer_info = {}
+" This global Dictionary tracks data for fixing code. Don't mess with it.
+let g:ale_fix_buffer_data = {}
 
 " User Configuration
 
@@ -114,10 +110,7 @@ let g:ale_set_highlights = get(g:, 'ale_set_highlights', has('syntax'))
 let g:ale_echo_cursor = get(g:, 'ale_echo_cursor', 1)
 
 " This flag can be set to 0 to disable balloon support.
-let g:ale_set_balloons = get(g:, 'ale_set_balloons',
-\   (has('balloon_eval') && has('gui_running'))
-\   || (has('balloon_eval_term') && !has('gui_running'))
-\)
+let g:ale_set_balloons = get(g:, 'ale_set_balloons', has('balloon_eval') && has('gui_running'))
 
 " This flag can be set to 0 to disable warnings for trailing whitespace
 let g:ale_warn_about_trailing_whitespace = get(g:, 'ale_warn_about_trailing_whitespace', 1)
