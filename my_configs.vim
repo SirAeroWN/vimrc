@@ -38,24 +38,19 @@ augroup filetype_sh
    autocmd FileType sh setlocal tabstop=2
 augroup END
 
-augroup filetype_md
+augroup text_files
    autocmd!
     " change the previous header
-   autocmd FileType md onoremap ih :<c-u>execute "normal! ?^[-=]\\{2,}\\+$\r:nohlsearch\rkvg_"<cr>
+   autocmd FileType md,markdown,txt onoremap ih :<c-u>execute "normal! ?^[-=]\\{2,}\\+$\r:nohlsearch\rkvg_"<cr>
     " set indent level to be 2 spaces in markdown
-   autocmd FileType md setlocal shiftwidth=2
-   autocmd FileType md setlocal tabstop=2
+   autocmd FileType md,markdown,txt setlocal shiftwidth=2
+   autocmd FileType md,markdown,txt setlocal tabstop=2
+    " do spelling for markdown
+   autocmd FileType md,markdown,txt setlocal spell
+   autocmd BufNewFile,BufRead *.md,*.markdown,*.txt setlocal spell
+    " autocomplete english
+   autocmd FileType md,markdown,txt setlocal complete+=kspell
 augroup END
-
-augroup filetype_markdown
-   autocmd!
-    " change the previous header
-   autocmd FileType markdown onoremap ih :<c-u>execute "normal! ?^[-=]\\{2,}$\r:nohlsearch\rkvg_"<cr>
-    " set indent level to be 2 spaces in markdown
-   autocmd FileType markdown setlocal shiftwidth=2
-   autocmd FileType markdown setlocal tabstop=2
-augroup END
-
 
 " grep operator
 set grepprg=/usr/bin/grep
