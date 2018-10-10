@@ -1,5 +1,7 @@
 set number
 set hidden
+set splitbelow
+set splitright
 
 set spelllang=en_us
 
@@ -50,18 +52,58 @@ augroup text_files
    autocmd BufNewFile,BufRead *.md,*.markdown,*.txt setlocal spell
     " autocomplete english
    autocmd FileType md,markdown,txt setlocal complete+=kspell
+   autocmd FileType md,markdown,txt colorscheme palenight
 augroup END
 
-" grep operator
-set grepprg=/usr/bin/grep
-" nnoremap <leader>gg :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
-source ~/.vim_runtime/my_plugins/grep-operator.vim
+augroup filetype_py
+    autocmd!
+    let python_highlight_all=1
+    syntax on
+    "python with virtualenv support
+    python3 << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+EOF
+augroup END
 
+
+" Colors
 set background=dark
-" colorscheme sublimemonokai
-colorscheme palenight
-let g:lightline.colorscheme = 'palenight'
-" colorscheme dracula
 if (has("termguicolors"))
   set termguicolors
 endif
+
+" colorscheme sublimemonokai
+
+" let ayucolor="light"  " for light version of theme
+" let ayucolor="mirage" " for mirage version of theme
+" let ayucolor="dark"   " for dark version of theme
+" colorscheme ayu
+
+" colorscheme palenight
+" let g:lightline.colorscheme = 'palenight'
+
+" colorscheme dracula
+
+" let g:gruvbox_italic=1
+" colorscheme gruvbox
+
+" let g:lightline.colorscheme = 'onedark'
+" let g:onedark_terminal_italics = 1
+" colorscheme onedark
+" 
+" let g:nord_italic = 1
+" let g:nord_underline = 1
+" let g:nord_italic_comments = 1
+" colorscheme nord
+
+" colorscheme peaksea
+
+" let g:carbonized_dark_FoldCol = 'off'
+let g:carbonized_dark_LineNr = 'off'
+let g:lightline.colorscheme = 'carbonized_dark'
+colorscheme carbonized-dark
