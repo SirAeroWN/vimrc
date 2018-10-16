@@ -30,7 +30,6 @@ endif
 
 " colorscheme peaksea
 
-" let g:carbonized_dark_FoldCol = 'off'
 let g:carbonized_dark_LineNr = 'off'
 let g:lightline.colorscheme = 'carbonized_dark'
 colorscheme carbonized-dark

@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
-let s:vim_runtime = expand('<sfile>:p:h')."/.."
+let s:vim_runtime = expand('<sfile>:p:h').'/..'
 call plug#begin(s:vim_runtime.'/plugs')
 " plugins
 Plug 'w0rp/ale'
@@ -14,7 +14,6 @@ Plug 'amix/open_file_under_cursor.vim'
 Plug 'vim-scripts/tlib'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'groenewege/vim-less'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/goyo.vim'
 Plug 'amix/vim-zenroom2'
@@ -26,9 +25,20 @@ Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'tpope/tpope-vim-abolish'
 Plug 'vim-scripts/mru.vim'
-Plug 'yuttie/comfortable-motion.vim'
 Plug 'mhinz/vim-startify'
 Plug 'vim-scripts/AfterColors.vim'
+
+" autocomplete
+if !has('nvim')
+    Plug 'Valloric/YouCompleteMe', { 'do': 'python3 install.py' }
+endif
+
+" motions
+Plug 'easymotion/vim-easymotion'
+Plug 'yuttie/comfortable-motion.vim'
+
+" repl
+Plug 'jalvesaq/vimcmdline'
 
 " language specific
 Plug 'fatih/vim-go'
@@ -73,9 +83,6 @@ map <leader>f :MRU<CR>
 """"""""""""""""""""""""""""""
 let g:yankstack_yank_keys = ['y', 'd']
 
-nmap <c-p> <Plug>yankstack_substitute_older_paste
-nmap <c-n> <Plug>yankstack_substitute_newer_paste
-
 
 """"""""""""""""""""""""""""""
 " => CTRL-P
@@ -107,7 +114,7 @@ set grepprg=/bin/grep\ -nH
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinPos = 'right'
 let NERDTreeShowHidden=0
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 let g:NERDTreeWinSize=35
@@ -156,11 +163,11 @@ nnoremap <silent> <leader>z :Goyo<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim-go
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = 'goimports'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Syntastic (syntax checker)
+" => Ale (syntax checker)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ale_linters = {
 \   'javascript': ['jshint'],
@@ -174,8 +181,11 @@ nmap <silent> <leader>a <Plug>(ale_next_wrap)
 let g:ale_set_highlights = 1
 
 " Only run linting when saving the file
-let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_delay = 2000
 let g:ale_lint_on_enter = 0
+nmap <silent> <C-p> <Plug>(ale_previous_wrap)
+nmap <silent> <C-n> <Plug>(ale_next_wrap)
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -183,3 +193,32 @@ let g:ale_lint_on_enter = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:gitgutter_enabled=0
 nnoremap <silent> <leader>d :GitGutterToggle<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => YouCompleteMe
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ycm_min_num_of_chars_for_completion = 99
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vimcmdline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vimcmdline mappings
+let cmdline_map_start          = '<F4>'
+let cmdline_map_send           = '<F6>'
+let cmdline_map_source_fun     = '<F5>'
+let cmdline_map_quit           = '<F7>'
+
+" vimcmdline options
+let cmdline_vsplit      = 1      " Split the window vertically
+let cmdline_esc_term    = 1      " Remap <Esc> to :stopinsert in Neovim's terminal
+let cmdline_in_buffer   = 1      " Start the interpreter in a Neovim's terminal
+let cmdline_term_height = 15     " Initial height of interpreter window or pane
+let cmdline_term_width  = 80     " Initial width of interpreter window or pane
+let cmdline_tmp_dir     = '/tmp' " Temporary directory to save files
+let cmdline_outhl       = 1      " Syntax highlight the output
+let cmdline_auto_scroll = 1      " Keep the cursor at the end of terminal (nvim)
+
+let cmdline_app           = {}
+let cmdline_app['python'] = 'ipython'
