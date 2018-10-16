@@ -57,6 +57,7 @@ ayu-vim https://github.com/ayu-theme/ayu-vim
 vim-startify https://github.com/mhinz/vim-startify
 carbonized https://github.com/nightsense/carbonized
 AfterColors.vim https://github.com/vim-scripts/AfterColors.vim
+vim-easymotion https://github.com/easymotion/vim-easymotion
 """.strip()
 
 GITHUB_ZIP = '%s/archive/master.zip'

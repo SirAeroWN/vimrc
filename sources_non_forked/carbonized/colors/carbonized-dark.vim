@@ -241,10 +241,3 @@ cal <sid>h('CursorLineNr'     , s:g4 , s:g0 , s:t4 , s:t0 , 'none'      , ''  )
 cal <sid>h('LineNr'           , s:g4 , s:g0 , s:t4 , s:t0 , 'none'      , ''  )
 endif
 endif
-
-" disable the odd bar on the left
-if exists('g:carbonized_dark_FoldCol')
-if g:carbonized_dark_FoldCol == 'off'
-cal <sid>h('FoldColumn'           , s:g4 , s:g0 , s:t4 , s:t0 , 'none'      , ''  )
-endif
-endif
