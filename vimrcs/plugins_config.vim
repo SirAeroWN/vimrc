@@ -146,32 +146,3 @@ nmap <silent> <C-n> <Plug>(ale_next_wrap)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:gitgutter_enabled=0
 nnoremap <silent> <leader>d :GitGutterToggle<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => YouCompleteMe
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ycm_min_num_of_chars_for_completion = 99
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vimcmdline
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vimcmdline mappings
-let cmdline_map_start          = '<F4>'
-let cmdline_map_send           = '<F6>'
-let cmdline_map_source_fun     = '<F5>'
-let cmdline_map_quit           = '<F7>'
-
-" vimcmdline options
-let cmdline_vsplit      = 1      " Split the window vertically
-let cmdline_esc_term    = 1      " Remap <Esc> to :stopinsert in Neovim's terminal
-let cmdline_in_buffer   = 1      " Start the interpreter in a Neovim's terminal
-let cmdline_term_height = 15     " Initial height of interpreter window or pane
-let cmdline_term_width  = 80     " Initial width of interpreter window or pane
-let cmdline_tmp_dir     = '/tmp' " Temporary directory to save files
-let cmdline_outhl       = 1      " Syntax highlight the output
-let cmdline_auto_scroll = 1      " Keep the cursor at the end of terminal (nvim)
-
-let cmdline_app           = {}
-let cmdline_app['python'] = 'ipython'
