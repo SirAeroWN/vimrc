@@ -13,6 +13,7 @@ call pathogen#infect(s:vim_runtime.'/sources_forked/{}')
 call pathogen#infect(s:vim_runtime.'/sources_non_forked/{}')
 call pathogen#helptags()
 
+
 """"""""""""""""""""""""""""""
 " => bufExplorer plugin
 """"""""""""""""""""""""""""""
@@ -34,9 +35,6 @@ map <leader>f :MRU<CR>
 " => YankStack
 """"""""""""""""""""""""""""""
 let g:yankstack_yank_keys = ['y', 'd']
-
-nmap <c-p> <Plug>yankstack_substitute_older_paste
-nmap <c-n> <Plug>yankstack_substitute_newer_paste
 
 
 """"""""""""""""""""""""""""""
@@ -60,13 +58,6 @@ let g:user_zen_mode='a'
 
 
 """"""""""""""""""""""""""""""
-" => snipMate (beside <TAB> support <CTRL-j>)
-""""""""""""""""""""""""""""""
-ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
-snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
-
-
-""""""""""""""""""""""""""""""
 " => Vim grep
 """"""""""""""""""""""""""""""
 let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
@@ -76,27 +67,13 @@ set grepprg=/bin/grep\ -nH
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinPos = 'right'
 let NERDTreeShowHidden=0
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 let g:NERDTreeWinSize=35
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-multiple-cursors
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:multi_cursor_next_key="\<C-s>"
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => surround.vim config
-" Annotate strings with gettext 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-vmap Si S(i_<esc>f)
-au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -139,11 +116,11 @@ nnoremap <silent> <leader>z :Goyo<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim-go
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = 'goimports'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Syntastic (syntax checker)
+" => Ale (syntax checker)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ale_linters = {
 \   'javascript': ['jshint'],
@@ -157,8 +134,11 @@ nmap <silent> <leader>a <Plug>(ale_next_wrap)
 let g:ale_set_highlights = 1
 
 " Only run linting when saving the file
-let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_delay = 2000
 let g:ale_lint_on_enter = 0
+nmap <silent> <C-p> <Plug>(ale_previous_wrap)
+nmap <silent> <C-n> <Plug>(ale_next_wrap)
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -166,3 +146,32 @@ let g:ale_lint_on_enter = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:gitgutter_enabled=0
 nnoremap <silent> <leader>d :GitGutterToggle<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => YouCompleteMe
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ycm_min_num_of_chars_for_completion = 99
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vimcmdline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vimcmdline mappings
+let cmdline_map_start          = '<F4>'
+let cmdline_map_send           = '<F6>'
+let cmdline_map_source_fun     = '<F5>'
+let cmdline_map_quit           = '<F7>'
+
+" vimcmdline options
+let cmdline_vsplit      = 1      " Split the window vertically
+let cmdline_esc_term    = 1      " Remap <Esc> to :stopinsert in Neovim's terminal
+let cmdline_in_buffer   = 1      " Start the interpreter in a Neovim's terminal
+let cmdline_term_height = 15     " Initial height of interpreter window or pane
+let cmdline_term_width  = 80     " Initial width of interpreter window or pane
+let cmdline_tmp_dir     = '/tmp' " Temporary directory to save files
+let cmdline_outhl       = 1      " Syntax highlight the output
+let cmdline_auto_scroll = 1      " Keep the cursor at the end of terminal (nvim)
+
+let cmdline_app           = {}
+let cmdline_app['python'] = 'ipython'
