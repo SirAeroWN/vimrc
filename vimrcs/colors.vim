@@ -1,6 +1,6 @@
 
 set background=dark
-if (has("termguicolors"))
+if (has('termguicolors'))
   set termguicolors
 endif
 
@@ -16,8 +16,8 @@ endif
 
 " colorscheme dracula
 
-" let g:gruvbox_italic=1
-" colorscheme gruvbox
+let g:gruvbox_italic=1
+colorscheme gruvbox
 
 " let g:lightline.colorscheme = 'onedark'
 " let g:onedark_terminal_italics = 1
@@ -30,6 +30,12 @@ endif
 
 " colorscheme peaksea
 
-let g:carbonized_dark_LineNr = 'off'
-let g:lightline.colorscheme = 'carbonized_dark'
-colorscheme carbonized-dark
+" let g:carbonized_dark_LineNr = 'off'
+" let g:lightline.colorscheme = 'carbonized_dark'
+" colorscheme carbonized-dark
+
+" set background=light
+" let g:two_firewatch_italics=1
+" colo two-firewatch
+
+" let g:lightline.colorscheme = 'twofirewatch'
