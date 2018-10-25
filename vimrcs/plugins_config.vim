@@ -16,7 +16,6 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/goyo.vim'
-Plug 'amix/vim-zenroom2'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'airblade/vim-gitgutter'
@@ -98,13 +97,6 @@ let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 
 
 """"""""""""""""""""""""""""""
-" => ZenCoding
-""""""""""""""""""""""""""""""
-" Enable all functions in all modes
-let g:user_zen_mode='a'
-
-
-""""""""""""""""""""""""""""""
 " => Vim grep
 """"""""""""""""""""""""""""""
 let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
@@ -152,9 +144,9 @@ let g:lightline = {
       \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vimroom
+" => Goyo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:goyo_width=100
+let g:goyo_width=120
 let g:goyo_margin_top = 2
 let g:goyo_margin_bottom = 2
 nnoremap <silent> <leader>z :Goyo<cr>
@@ -177,11 +169,6 @@ let g:ale_linters = {
 
 nmap <silent> <leader>a <Plug>(ale_next_wrap)
 
-" Disabling highlighting
-let g:ale_set_highlights = 1
-
-" Only run linting when saving the file
-" let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_delay = 2000
 let g:ale_lint_on_enter = 0
 nmap <silent> <C-p> <Plug>(ale_previous_wrap)

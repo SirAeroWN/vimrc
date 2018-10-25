@@ -24,5 +24,7 @@ nnoremap N Nzz
 nnoremap H Hzz
 nnoremap L Lzz
 
+nnoremap \ /\v
+
 "   make backspace actually backspace in normal mode
 nnoremap <BS> i<Left><Del><Right><Esc>

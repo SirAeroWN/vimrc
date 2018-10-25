@@ -243,4 +243,14 @@ if exists('g:gruvbox_number_column')
   let s:number_column = get(s:gb, g:gruvbox_number_column)
 endif
 
-call s:HL('FoldColumn', s:bg4, s:number_column)
+call s:HL('LineNr', s:bg4, s:number_column)
+
+call s:HL('FoldColumn', s:number_column, s:number_column)
+
+call s:HL('SignColumn', s:number_column, s:number_column)
+
+let s:italic = 'italic,'
+if g:gruvbox_italic == 0
+  let s:italic = ''
+endif
+call s:HL('Folded', s:bg4, s:bg1, s:italic)
