@@ -28,3 +28,6 @@ nnoremap \ /\v
 
 "   make backspace actually backspace in normal mode
 nnoremap <BS> i<Left><Del><Right><Esc>
+
+" search with zeal
+nnoremap gz :call system('zeal "<cword>"&')<CR><CR>
