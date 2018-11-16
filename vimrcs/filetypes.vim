@@ -89,3 +89,14 @@ au FileType gitcommit call setpos('.', [0, 1, 1, 0])
 " => Twig section
 """"""""""""""""""""""""""""""
 autocmd BufRead *.twig set syntax=html filetype=html
+
+
+""""""""""""""""""""""""""""""
+" => Prolog section
+""""""""""""""""""""""""""""""
+augroup filetype_prolog
+    autocmd!
+
+    au BufNewFile,BufRead *.pro setlocal syntax=prolog
+    au BufNewFile,BufRead *.pro setlocal filetype=prolog
+augroup END
