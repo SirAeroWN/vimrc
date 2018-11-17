@@ -31,3 +31,5 @@ nnoremap <BS> i<Left><Del><Right><Esc>
 
 " search with zeal
 nnoremap gz :call system('zeal "<cword>"&')<CR><CR>
+
+set encoding=UTF-8

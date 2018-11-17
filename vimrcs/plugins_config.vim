@@ -1,3 +1,4 @@
+scriptencoding utf-8
 """"""""""""""""""""""""""""""
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
@@ -25,7 +26,6 @@ Plug 'maximbaz/lightline-ale'
 Plug 'tpope/vim-abolish'
 Plug 'vim-scripts/mru.vim'
 Plug 'mhinz/vim-startify'
-Plug 'vim-scripts/AfterColors.vim'
 
 " autocomplete
 if !has('nvim')
@@ -56,6 +56,7 @@ Plug 'morhetz/gruvbox'
 Plug 'vim-scripts/peaksea'
 Plug 'twerth/ir_black'
 Plug 'rakr/vim-two-firewatch'
+Plug 'vim-scripts/AfterColors.vim'
 
 call plug#end()
 
