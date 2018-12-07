@@ -16,6 +16,7 @@ endif
 
 " colorscheme dracula
 
+let g:lightline.colorscheme = 'gruvbox'
 let g:gruvbox_italic=1
 colorscheme gruvbox
 
@@ -39,3 +40,6 @@ colorscheme gruvbox
 " colo two-firewatch
 
 " let g:lightline.colorscheme = 'twofirewatch'
+
+" let g:spacegray_use_italics = 1
+" colorscheme spacegray

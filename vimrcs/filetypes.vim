@@ -56,7 +56,8 @@ augroup text_files
    autocmd BufNewFile,BufRead *.md,*.markdown,*.txt setlocal spell
     " autocomplete english
    autocmd FileType md,markdown,txt setlocal complete+=kspell
-   autocmd FileType md,markdown,txt colorscheme palenight
+   " autocmd FileType md,markdown,txt colorscheme palenight
+   " autocmd FileType md,markdown,txt set g:lightline.colorscheme='palenight'
 augroup END
 
 
@@ -71,24 +72,6 @@ augroup filetype_sh
    autocmd FileType sh setlocal shiftwidth=2
    autocmd FileType sh setlocal tabstop=2
 augroup END
-
-
-""""""""""""""""""""""""""""""
-" => CoffeeScript section
-"""""""""""""""""""""""""""""""
-function! CoffeeScriptFold()
-    setl foldmethod=indent
-    setl foldlevelstart=1
-endfunction
-au FileType coffee call CoffeeScriptFold()
-
-au FileType gitcommit call setpos('.', [0, 1, 1, 0])
-
-
-""""""""""""""""""""""""""""""
-" => Twig section
-""""""""""""""""""""""""""""""
-autocmd BufRead *.twig set syntax=html filetype=html
 
 
 """"""""""""""""""""""""""""""

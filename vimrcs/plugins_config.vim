@@ -11,7 +11,6 @@ Plug 'mileszs/ack.vim'
 Plug 'corntrace/bufexplorer'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'amix/open_file_under_cursor.vim'
 Plug 'vim-scripts/tlib'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'michaeljsmith/vim-indent-object'
@@ -28,35 +27,31 @@ Plug 'vim-scripts/mru.vim'
 Plug 'mhinz/vim-startify'
 
 " autocomplete
-if !has('nvim')
-    Plug 'Valloric/YouCompleteMe', { 'do': 'python3 install.py' }
-endif
 
 " motions
 Plug 'easymotion/vim-easymotion'
-Plug 'yuttie/comfortable-motion.vim'
 
 " repl
 Plug 'jalvesaq/vimcmdline'
 
 " language specific
-Plug 'fatih/vim-go'
 Plug 'nvie/vim-flake8'
 Plug 'tpope/vim-markdown'
 
 " colorschemes
-Plug 'nightsense/carbonized'
-Plug 'ErichDonGubler/vim-sublime-monokai'
-Plug 'dracula/dracula-theme'
+" Plug 'nightsense/carbonized'
+" Plug 'ErichDonGubler/vim-sublime-monokai'
+" Plug 'dracula/dracula-theme'
 Plug 'drewtempelmeyer/palenight.vim'
-Plug 'joshdick/onedark.vim'
-Plug 'arcticicestudio/nord-vim'
-Plug 'ayu-theme/ayu-vim'
+" Plug 'joshdick/onedark.vim'
+" Plug 'arcticicestudio/nord-vim'
+" Plug 'ayu-theme/ayu-vim'
 Plug 'morhetz/gruvbox'
-Plug 'vim-scripts/peaksea'
-Plug 'twerth/ir_black'
-Plug 'rakr/vim-two-firewatch'
+" Plug 'vim-scripts/peaksea'
+" Plug 'twerth/ir_black'
+" Plug 'rakr/vim-two-firewatch'
 Plug 'vim-scripts/AfterColors.vim'
+" Plug 'ajh17/Spacegray.vim'
 
 call plug#end()
 
@@ -151,12 +146,6 @@ let g:goyo_width=120
 let g:goyo_margin_top = 2
 let g:goyo_margin_bottom = 2
 nnoremap <silent> <leader>z :Goyo<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vim-go
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:go_fmt_command = 'goimports'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
