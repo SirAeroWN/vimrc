@@ -83,3 +83,38 @@ augroup filetype_prolog
     au BufNewFile,BufRead *.pro setlocal syntax=prolog
     au BufNewFile,BufRead *.pro setlocal filetype=prolog
 augroup END
+
+
+""""""""""""""""""""""""""""""
+" => netrw section
+""""""""""""""""""""""""""""""
+augroup netrw_mapping
+    autocmd!
+    autocmd FileType netrw call NetrwMapping()
+augroup END
+
+func! GetScriptNumber(script_name)
+    " Return the <SNR> of a script.
+    "
+    " Args:
+    "   script_name : (str) The name of a sourced script.
+    "
+    " Return:
+    "   (int) The <SNR> of the script; if the script isn't found, -1.
+
+    redir => scriptnames
+    silent! scriptnames
+    redir END
+
+    for script in split(l:scriptnames, '\n')
+        if l:script =~ a:script_name
+            return str2nr(split(l:script, ':')[0])
+        endif
+    endfor
+
+    return -1
+endfunc
+
+function! NetrwMapping()
+    noremap <buffer> o :<C-U>call eval(printf("netrw#LocalBrowseCheck(<SNR>%d_NetrwBrowseChgDir(1,<SNR>%d_NetrwGetWord()))", GetScriptNumber('netrw.vim'), GetScriptNumber('netrw.vim')))<CR>
+endfunction
