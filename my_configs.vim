@@ -35,3 +35,4 @@ nnoremap <BS> i<Left><Del><Right><Esc>
 nnoremap gz :call system('zeal "<cword>"&')<CR><CR>
 
 set encoding=UTF-8
+set formatoptions-=tc
