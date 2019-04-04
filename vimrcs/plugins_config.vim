@@ -27,6 +27,7 @@ Plug 'vim-scripts/mru.vim'
 Plug 'mhinz/vim-startify'
 Plug 'vim-scripts/AfterColors.vim'
 Plug '~/.fzf'
+Plug 'junegunn/fzf.vim'
 
 " autocomplete
 
