@@ -36,7 +36,6 @@ set autoread
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-" let mapleader = ","
 let mapleader = "\<space>"
 
 " Fast actions
@@ -47,9 +46,6 @@ nnoremap <leader>x :x<cr>
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
-
-" save the current session
-nnoremap <C-s> :mksession! sess.vimsess<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -256,14 +252,17 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remap VIM 0 to first non-blank character
-map 0 ^
+" Remap VIM 0 to first non-blank character or beginning of line
+noremap <silent> 0 :call FirstCharOrFirstCol()<cr>
 
-" Move a line of text using ALT+[jk] or Command+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+function! FirstCharOrFirstCol()
+    let current_col = virtcol('.')
+    normal! ^
+    let first_char = virtcol('.')
+    if current_col <= first_char
+        normal! 0
+    endif
+endfunction
 
 if has('mac') || has('macunix')
   nmap <D-j> <M-j>
@@ -298,9 +297,6 @@ map <leader>ss :setlocal spell!<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
 
 " ex command for toggling hex mode - define mapping if desired
 command -bar Hexmode call ToggleHex()

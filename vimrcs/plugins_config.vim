@@ -5,29 +5,32 @@ scriptencoding utf-8
 let s:vim_runtime = expand('<sfile>:p:h').'/..'
 call plug#begin(s:vim_runtime.'/plugs')
 " plugins
+" linter
 Plug 'w0rp/ale'
-Plug 'maxbrunsfeld/vim-yankstack'
-Plug 'mileszs/ack.vim'
+
+" file and buffer navi
 Plug 'corntrace/bufexplorer'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tpope/vim-vinegar'
-Plug 'vim-scripts/tlib'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/goyo.vim'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-commentary'
-Plug 'airblade/vim-gitgutter'
-Plug 'digitaltoad/vim-pug'
-Plug 'itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
-Plug 'tpope/vim-abolish'
-Plug 'vim-scripts/mru.vim'
-Plug 'mhinz/vim-startify'
-Plug 'vim-scripts/AfterColors.vim'
+Plug 'yegappan/mru'
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-vinegar'
+
+" paste stuff
+Plug 'maxbrunsfeld/vim-yankstack'
+
+" git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" commenting
+Plug 'tpope/vim-commentary'
+
+" other
+Plug 'tpope/vim-repeat'
+
+" dependencies
+Plug 'vim-scripts/tlib'
+Plug 'MarcWeber/vim-addon-mw-utils'
 
 " autocomplete
 
@@ -35,26 +38,20 @@ Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
 
 " repl
-Plug 'jalvesaq/vimcmdline'
 
 " language specific
 Plug 'nvie/vim-flake8'
 Plug 'tpope/vim-markdown'
 
 " colorschemes
-" Plug 'nightsense/carbonized'
-" Plug 'ErichDonGubler/vim-sublime-monokai'
-" Plug 'dracula/dracula-theme'
 Plug 'drewtempelmeyer/palenight.vim'
-" Plug 'joshdick/onedark.vim'
-" Plug 'arcticicestudio/nord-vim'
-" Plug 'ayu-theme/ayu-vim'
 Plug 'morhetz/gruvbox'
-" Plug 'vim-scripts/peaksea'
-" Plug 'twerth/ir_black'
-" Plug 'rakr/vim-two-firewatch'
 Plug 'vim-scripts/AfterColors.vim'
-" Plug 'ajh17/Spacegray.vim'
+
+" non colorscheme visual things
+Plug 'itchyny/lightline.vim'
+Plug 'mhinz/vim-startify'
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
@@ -83,22 +80,10 @@ let g:yankstack_yank_keys = ['y', 'd']
 
 
 """"""""""""""""""""""""""""""
-" => CTRL-P
-""""""""""""""""""""""""""""""
-let g:ctrlp_working_path_mode = 0
-
-let g:ctrlp_map = '<c-f>'
-" map <leader>j :CtrlP<cr>
-map <c-b> :CtrlPBuffer<cr>
-
-let g:ctrlp_max_height = 20
-let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
-
-
-""""""""""""""""""""""""""""""
 " => FZF
 """"""""""""""""""""""""""""""
 map <leader>j :FZF<cr>
+map <c-b> :Buffers<cr>
 
 
 """"""""""""""""""""""""""""""
@@ -122,10 +107,6 @@ map <leader>nv :Vexplore!<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:lightline = {
       \ 'colorscheme': 'wombat',
-      \ }
-
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
       \             ['fugitive', 'readonly', 'filename', 'modified'] ],
@@ -134,7 +115,7 @@ let g:lightline = {
       \ 'component': {
       \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
       \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}',
       \ },
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
@@ -176,32 +157,3 @@ nmap <silent> <C-n> <Plug>(ale_next_wrap)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:gitgutter_enabled=0
 nnoremap <silent> <leader>d :GitGutterToggle<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => YouCompleteMe
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ycm_min_num_of_chars_for_completion = 99
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vimcmdline
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vimcmdline mappings
-let cmdline_map_start          = '<F4>'
-let cmdline_map_send           = '<F6>'
-let cmdline_map_source_fun     = '<F5>'
-let cmdline_map_quit           = '<F7>'
-
-" vimcmdline options
-let cmdline_vsplit      = 1      " Split the window vertically
-let cmdline_esc_term    = 1      " Remap <Esc> to :stopinsert in Neovim's terminal
-let cmdline_in_buffer   = 1      " Start the interpreter in a Neovim's terminal
-let cmdline_term_height = 15     " Initial height of interpreter window or pane
-let cmdline_term_width  = 80     " Initial width of interpreter window or pane
-let cmdline_tmp_dir     = '/tmp' " Temporary directory to save files
-let cmdline_outhl       = 1      " Syntax highlight the output
-let cmdline_auto_scroll = 1      " Keep the cursor at the end of terminal (nvim)
-
-let cmdline_app           = {}
-let cmdline_app['python'] = 'ipython'
