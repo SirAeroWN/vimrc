@@ -11,7 +11,7 @@ Plug 'w0rp/ale'
 " file and buffer navi
 Plug 'corntrace/bufexplorer'
 Plug 'yegappan/mru'
-Plug '~/.fzf'
+Plug 'junegunn/fzf',  { 'dir': '~/.fzf' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-vinegar'
 
