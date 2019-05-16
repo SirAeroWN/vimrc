@@ -117,4 +117,5 @@ endfunc
 
 function! NetrwMapping()
     noremap <buffer> o :<C-U>call eval(printf("netrw#LocalBrowseCheck(<SNR>%d_NetrwBrowseChgDir(1,<SNR>%d_NetrwGetWord()))", GetScriptNumber('netrw.vim'), GetScriptNumber('netrw.vim')))<CR>
+    noremap <buffer> q :Rexplore<CR>
 endfunction
