@@ -33,6 +33,9 @@ Plug 'vim-scripts/tlib'
 Plug 'MarcWeber/vim-addon-mw-utils'
 
 " autocomplete
+if has("win16") || has("win32")
+    Plug 'OmniSharp/omnisharp-vim'
+endif
 
 " motions
 Plug 'easymotion/vim-easymotion'
@@ -54,6 +57,28 @@ Plug 'mhinz/vim-startify'
 Plug 'junegunn/goyo.vim'
 
 call plug#end()
+
+
+
+""""""""""""""""""""""""""""""
+" => Omnisharp plugin
+""""""""""""""""""""""""""""""
+if has("win16") || has("win32")
+    let g:OmniSharp_server_path = 'D:\casa\Vim\omnisharp.http-win-x64\OmniSharp.exe'
+    let g:OmniSharp_selector_ui = 'fzf'
+    set completeopt=longest,menuone
+    augroup omnisharp_commands
+        autocmd!
+        autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+        autocmd FileType cs nnoremap <buffer> gd :OmniSharpGotoDefinition<CR>
+    augroup END
+    " Contextual code actions (uses fzf, CtrlP or unite.vim when available)
+    nnoremap <Leader>a :OmniSharpGetCodeActions<CR>
+    xnoremap <Leader>a :call OmniSharp#GetCodeActions('visual')<CR>
+
+    " Rename with dialog
+    nnoremap <Leader>nm :OmniSharpRename<CR>
+endif
 
 
 """"""""""""""""""""""""""""""
@@ -141,7 +166,8 @@ nnoremap <silent> <leader>z :Goyo<cr>
 let g:ale_linters = {
 \   'javascript': ['jshint'],
 \   'python': ['flake8'],
-\   'go': ['go', 'golint', 'errcheck']
+\   'go': ['go', 'golint', 'errcheck'],
+\   'cs': ['Omnisharp']
 \}
 
 nmap <silent> <leader>a <Plug>(ale_next_wrap)
@@ -157,3 +183,9 @@ nmap <silent> <C-n> <Plug>(ale_next_wrap)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:gitgutter_enabled=0
 nnoremap <silent> <leader>d :GitGutterToggle<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => commentary
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType autohotkey setlocal commentstring=;\ %s

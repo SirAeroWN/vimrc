@@ -1,5 +1,5 @@
 " Colors
-source ~/.vim_runtime/vimrcs/colors.vim
+source ./vimrcs/colors.vim
 
 set number
 set hidden
