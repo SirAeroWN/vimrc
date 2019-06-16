@@ -170,7 +170,7 @@ set shiftwidth=4
 set tabstop=4
 
 set autoindent "Auto indent
-set smartindent "Smart indent
+filetype plugin indent on " vimrc recomendation from https://www.reddit.com/r/vim/wiki/vimrctips
 set wrap "Wrap lines
 
 
