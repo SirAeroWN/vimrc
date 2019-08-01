@@ -99,6 +99,10 @@ map <leader>s :vsplit <c-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
+" Jump forward and back a page, then center
+nnoremap <c-b> <c-b>zz
+nnoremap <c-f> <c-f>zz
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings

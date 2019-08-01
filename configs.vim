@@ -1,4 +1,30 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Maintainer: 
+"       Will Norvelle     — @SirAeroWN
+"       Amir Salihefendic — @amix3k (former)
+"
+" Sections:
+"    -> General
+"    -> Tags
+"    -> VIM user interface
+"    -> GUI related
+"    -> Colors and Fonts
+"    -> Files, backups, and undo
+"    -> Text, tab, and indent related
+"    -> Visual mode related
+"    -> Moving around, tabs, and buffers
+"    -> Status line
+"    -> Editing mappings
+"    -> vimgrep searching and cope displaying
+"    -> Spell checking
+"    -> Filetypes
+"    -> Misc
+"    -> Helper functions
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
@@ -10,6 +36,9 @@ filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
+
+" competion options
+set completeopt=menu,menuone,noinsert,noselect
 
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
@@ -23,6 +52,12 @@ endfun
 if has('autocmd')
     autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Tags
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set tags=./tags;
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -182,7 +217,7 @@ endtry
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
+" => Text, tab, and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
 set expandtab
@@ -281,6 +316,35 @@ augroup END
 augroup netrw_mapping
     autocmd!
     autocmd FileType netrw call NetrwMapping()
+augroup END
+
+
+""""""""""""""""""""""""""""""
+" => Git Commit section
+""""""""""""""""""""""""""""""
+augroup git_commit_message
+    autocmd!
+    autocmd FileType gitcommit setlocal spell
+    autocmd FileType gitcommit setlocal complete+=kspell
+    autocmd BufReadPost * if &filetype == 'gitcommit' | :execute ":normal! ggA" | endif
+augroup END
+
+
+""""""""""""""""""""""""""""""
+" => Ember.js section
+""""""""""""""""""""""""""""""
+augroup ember
+    autocmd!
+    autocmd BufReadPost *.hbs setlocal iskeyword+=-
+augroup END
+
+
+""""""""""""""""""""""""""""""
+" => CSS section
+""""""""""""""""""""""""""""""
+augroup css
+    autocmd!
+    autocmd filetype css,scss setlocal iskeyword+=-
 augroup END
 
 

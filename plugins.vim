@@ -35,6 +35,9 @@ Plug 'vim-scripts/tlib'
 Plug 'MarcWeber/vim-addon-mw-utils'
 
 " autocomplete
+" Plug 'https://gitlab.com/yramagicman/auto-omnicomplete.git'
+" Plug '~/auto-omnicomplete'
+Plug 'https://gitlab.com/SirAeroWN/auto-omnicomplete'
 
 " motions
 Plug 'easymotion/vim-easymotion'
@@ -43,7 +46,8 @@ Plug 'easymotion/vim-easymotion'
 
 " language specific
 Plug 'nvie/vim-flake8',  { 'for': 'python' }
-Plug 'tpope/vim-markdown',  { 'for': 'markdown'   }
+Plug 'tpope/vim-markdown',  { 'for': 'markdown' }
+Plug 'sheerun/vim-polyglot'
 
 " colorschemes
 Plug 'drewtempelmeyer/palenight.vim'
@@ -85,7 +89,7 @@ let g:yankstack_yank_keys = ['y', 'd']
 " => FZF
 """"""""""""""""""""""""""""""
 nnoremap <leader>j :FZF<cr>
-noremap <c-b> :Buffers<cr>
+" noremap <c-b> :Buffers<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -169,6 +173,7 @@ try
     let g:lightline.colorscheme = 'gruvbox'
     let g:gruvbox_contrast_dark = 'hard'
     let g:gruvbox_italic=1
+    let g:gruvbox_improved_strings = 1
     colorscheme gruvbox
 catch
 endtry
@@ -177,4 +182,22 @@ endtry
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Startify
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:startify_bookmarks = [{'v': 'D:\casa\Vim\.vim_runtime\vimrc.vim']
+let g:startify_bookmarks = [{'v': 'C:\casa\.vim_runtime\vimrc.vim'}]
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Polyglot
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" polyglot
+let g:polyglot_disabled = ['markdown', 'python-indent']
+
+" polyglot's sub packages
+let g:javascript_plugin_jsdoc = 1
+let g:python_highlight_all = 1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => auto-omnicomplete
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:AutoOmniComplete_complete_map = "\<c-n>"
+let g:AutoOmniComplete_tab = 0
