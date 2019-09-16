@@ -232,6 +232,8 @@ set tabstop=4
 set autoindent "Auto indent
 set wrap "Wrap lines
 
+set nojoinspaces
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers

@@ -11,33 +11,35 @@ call plug#begin(s:vim_runtime.'/plugs')
 Plug 'w0rp/ale'
 
 " file and buffer navigation
-Plug 'corntrace/bufexplorer'
+Plug 'jlanzarotta/bufexplorer'
 Plug 'yegappan/mru'
 Plug 'junegunn/fzf',  { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-vinegar'
 
 " paste stuff
-Plug 'maxbrunsfeld/vim-yankstack'
+
+" neovim specific
+if has("nvim")
+  Plug 'markonm/traces.vim'
+endif
 
 " git
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+Plug 'itchyny/vim-gitbranch'
 
 " commenting
 Plug 'tpope/vim-commentary'
 
 " other
 Plug 'tpope/vim-repeat'
-
-" dependencies
-Plug 'vim-scripts/tlib'
-Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tpope/vim-unimpaired'
 
 " autocomplete
-" Plug 'https://gitlab.com/yramagicman/auto-omnicomplete.git'
-" Plug '~/auto-omnicomplete'
-Plug 'https://gitlab.com/SirAeroWN/auto-omnicomplete'
+if has("nvim")
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'https://gitlab.com/yramagicman/auto-omnicomplete.git'
+endif
 
 " motions
 Plug 'easymotion/vim-easymotion'
@@ -57,7 +59,10 @@ Plug 'vim-scripts/AfterColors.vim'
 " non colorscheme visual things
 Plug 'itchyny/lightline.vim'
 Plug 'mhinz/vim-startify'
-Plug 'junegunn/goyo.vim'
+
+" dependencies
+Plug 'vim-scripts/tlib'
+Plug 'MarcWeber/vim-addon-mw-utils'
 
 call plug#end()
 
@@ -76,20 +81,23 @@ noremap <leader>o :BufExplorer<cr>
 " => MRU plugin
 """"""""""""""""""""""""""""""
 let MRU_Max_Entries = 400
-noremap <leader>f :MRU<CR>
-
-
-""""""""""""""""""""""""""""""
-" => YankStack
-""""""""""""""""""""""""""""""
-let g:yankstack_yank_keys = ['y', 'd']
+nnoremap <leader>f :MRU<CR>
 
 
 """"""""""""""""""""""""""""""
 " => FZF
 """"""""""""""""""""""""""""""
 nnoremap <leader>j :FZF<cr>
-" noremap <c-b> :Buffers<cr>
+nnoremap <leader>/ :Rg<cr>
+nnoremap <leader>L :Lines<cr>
+nnoremap <leader>H :Helptags!<cr>
+nnoremap <leader>B :Buffers<cr>
+nmap <leader><tab> <plug>(fzf-maps-n)
+imap <c-x><c-k> <plug>(fzf-complete-word)
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-q': 'vsplit' }
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -107,62 +115,64 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
-      \             ['fugitive', 'readonly', 'filename', 'modified'] ],
+      \             ['gitbranch', 'readonly', 'filename', 'modified'] ],
       \   'right': [ [ 'lineinfo' ], ['percent'] ]
       \ },
       \ 'component': {
       \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
+      \ },
+      \ 'component_function': {
+      \   'filename': 'LightlineFileName',
+      \   'gitbranch': 'gitbranch#name'
       \ },
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))'
       \ },
       \ 'separator': { 'left': ' ', 'right': ' ' },
       \ 'subseparator': { 'left': ' ', 'right': ' ' }
       \ }
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Goyo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:goyo_width=120
-let g:goyo_margin_top = 2
-let g:goyo_margin_bottom = 2
-nnoremap <silent> <leader>z :Goyo<cr>
+function! LightlineFileName()
+  let full_filename = @%
+  if len(full_filename) <= 70
+    return full_filename
+  else
+    let l = len(full_filename)
+    let i = 0
+    let split_name = split(full_filename, '/')
+    while (l > 70 && i < len(split_name))
+      let l = l - len(split_name[i])
+      let i = i + 1
+    endwhile
+    return join(split_name[i:], '/')
+  endif
+  return '[No Name]'
+endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ale (syntax checker)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ale_linters = {
-\   'javascript': ['jshint'],
+\   'javascript': ['eslint'],
 \   'python': ['flake8'],
-\   'go': ['go', 'golint', 'errcheck'],
-\   'cs': ['Omnisharp']
+\   'go': ['go', 'golint', 'errcheck']
 \}
 
-nmap <silent> <leader>a <Plug>(ale_next_wrap)
-
-let g:ale_lint_delay = 2000
-let g:ale_lint_on_enter = 0
+let g:ale_lint_delay = 100
+let g:ale_lint_on_enter = 1
 nmap <silent> <C-p> <Plug>(ale_previous_wrap)
 nmap <silent> <C-n> <Plug>(ale_next_wrap)
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Git gutter (Git diff)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:gitgutter_enabled=0
-nnoremap <silent> <leader>d :GitGutterToggle<cr>
+nmap <silent> <leader>a <Plug>(ale_next_wrap)
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => commentary
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType autohotkey setlocal commentstring=;\ %s
+autocmd FileType html.handlebars setlocal commentstring={{!--\ %s\ --}}
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -170,6 +180,9 @@ autocmd FileType autohotkey setlocal commentstring=;\ %s
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " use gruvbox if we can, but fall back to desert if we have to
 try
+  if (has('termguicolors'))
+    set termguicolors
+  endif
     let g:lightline.colorscheme = 'gruvbox'
     let g:gruvbox_contrast_dark = 'hard'
     let g:gruvbox_italic=1
@@ -182,7 +195,17 @@ endtry
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Startify
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:startify_bookmarks = [{'v': 'C:\casa\.vim_runtime\vimrc.vim'}]
+if has('win32') || has('win16')
+  let g:startify_bookmarks = [{'v': 'C:\casa\.vim_runtime\vimrc.vim'},
+                            \ {'s': 'C:\Users\wnorvelle\Documents\scratch.md'},
+                            \ {'m': 'C:\FALCOR\software\Websites\Web\customer-ember'}
+                            \ ]
+else
+  let g:startify_bookmarks = [{'v': '/mnt/c/casa/.vim_runtime/vimrc.vim'},
+                            \ {'s': '/mnt/c/Users/wnorvelle/Documents/scratch.md'},
+                            \ {'m': '/mnt/c/FALCOR/software/Websites/Web/customer-ember'}
+                            \ ]
+endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -199,5 +222,24 @@ let g:python_highlight_all = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => auto-omnicomplete
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:AutoOmniComplete_complete_map = "\<c-n>"
-let g:AutoOmniComplete_tab = 0
+if !has("nvim")
+  let g:AutoOmniComplete_complete_map = "\<c-n>"
+  let g:AutoOmniComplete_tab = 0
+endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => deoplete
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("nvim")
+  let g:deoplete#enable_at_startup = 1
+endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => traces.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("nvim")
+  let g:traces_substitute_preview = 0 
+  let g:traces_num_range_preview = 1
+endif

@@ -4,20 +4,11 @@
 "       Amir Salihefendic — @amix3k (former)
 "
 " Sections:
-"    -> Plugins
 "    -> General
-"    -> VIM user interface
-"    -> GUI related
-"    -> Colors and Fonts
-"    -> Files and backups
-"    -> Text, tab and indent related
 "    -> Visual mode related
 "    -> Moving around, tabs and buffers
-"    -> Status line
 "    -> Editing mappings
-"    -> vimgrep searching and cope displaying
 "    -> Spell checking
-"    -> Filetypes
 "    -> Misc
 "    -> Helper functions
 "
@@ -96,6 +87,9 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " opens a split with the current buffer's path
 map <leader>s :vsplit <c-r>=expand("%:p:h")<cr>/
 
+" start to edit a new file with the current buffer's path
+map <leader>e :e <c-r>=expand("%:p:h")<cr>/
+
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
@@ -134,8 +128,22 @@ nnoremap \ /\v
 " also because fuck unremapped Q
 nnoremap Q @q
 
+nnoremap S :%s/
+nnoremap X :s/
+
+" start sub with current word
+nnoremap <leader><leader>s :%s/\<<C-r><C-w>\>/
+vnoremap <leader><leader>s y:%s/<C-r>0/
+
 " toggle paste mode
 nnoremap <leader><leader>p :set paste!<cr>
+
+inoremap <expr> <cr> pumvisible() ? "<c-y><cr>" : "<cr>"
+
+" use control-space (same as <c-@>) as a way to escape insert mode
+inoremap <c-@> <Esc>
+
+vnoremap p "_dP
 
 if has('mac') || has('macunix')
   nmap <D-j> <M-j>
