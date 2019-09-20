@@ -107,7 +107,6 @@ noremap <silent> 0 :call FirstCharOrFirstCol()<cr>
 " insert mode maps
 inoremap jj <Esc>
 inoremap jk <Esc>
-inoremap hj <Esc>
 
 " normal mode remaps
 "   the Xzz makes the view center on the cursor after the X movement
@@ -139,9 +138,14 @@ vnoremap <leader><leader>s y:%s/<C-r>0/
 nnoremap <leader><leader>p :set paste!<cr>
 
 inoremap <expr> <cr> pumvisible() ? "<c-y><cr>" : "<cr>"
+inoremap <expr> <tab> pumvisible() ? "<c-n>" : "<tab>"
 
-" use control-space (same as <c-@>) as a way to escape insert mode
-inoremap <c-@> <Esc>
+" use control-space (same as <c-@>) to paste in insert mode
+if has('nvim')
+  inoremap <C-Space> <C-r>*
+else
+  inoremap <c-@> <C-r>*
+endif
 
 vnoremap p "_dP
 

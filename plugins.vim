@@ -37,6 +37,7 @@ Plug 'tpope/vim-unimpaired'
 " autocomplete
 if has("nvim")
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/neco-syntax'
 else
   Plug 'https://gitlab.com/yramagicman/auto-omnicomplete.git'
 endif
@@ -243,3 +244,9 @@ if has("nvim")
   let g:traces_substitute_preview = 0 
   let g:traces_num_range_preview = 1
 endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => matchit.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+runtime! macros/matchit.vim
