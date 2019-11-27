@@ -53,6 +53,10 @@ if has('autocmd')
     autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 endif
 
+if has('nvim') && has('win32')
+    let g:python3_host_prog = 'C:\Users\wnorvelle\AppData\Local\Programs\Python\Python37\python.exe'
+endif
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tags
@@ -104,10 +108,10 @@ set smartcase
 set hlsearch
 
 " Makes search act like search in modern browsers
-set incsearch 
+set incsearch
 
 " Don't redraw while executing macros (good performance config)
-set lazyredraw 
+set lazyredraw
 
 " For regular expressions turn magic on
 set magic
@@ -155,16 +159,18 @@ set formatoptions-=tc
 " => GUI related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set font according to system
-if has("mac") || has("macunix")
-    set gfn=Hack:h14,IBM\ Plex\ Mono:h14,Source\ Code\ Pro:h15,Menlo:h15
-elseif has("win16") || has("win32")
-    set gfn=Hack:h10,IBM\ Plex\ Mono:h14,Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
-elseif has("gui_gtk2")
-    set gfn=:Hack\ 14,IBM\ Plex\ Mono:h14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("linux")
-    set gfn=:Hack\ 14,IBM\ Plex\ Mono:h14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("unix")
-    set gfn=Monospace\ 11
+if !has("nvim")
+    if has("mac") || has("macunix")
+        set guifont=Hack:h14,IBM\ Plex\ Mono:h14,Source\ Code\ Pro:h15,Menlo:h15
+    elseif has("win16") || has("win32")
+        set guifont=Hack:h10,IBM\ Plex\ Mono:h14,Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
+    elseif has("gui_gtk2")
+        set guifont=Hack\ 14,IBM\ Plex\ Mono:h14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
+    elseif has("linux")
+        set guifont=:Hack\ 14,IBM\ Plex\ Mono:h14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
+    elseif has("unix")
+        set guifont=Monospace\ 11
+    endif
 endif
 
 
@@ -182,6 +188,10 @@ endif
 if (has('termguicolors'))
   set termguicolors
 endif
+
+set t_Co=256
+let &t_AB="\e[48;5;%dm"
+let &t_AF="\e[38;5;%dm"
 
 set background=dark
 
@@ -348,6 +358,38 @@ augroup css
     autocmd!
     autocmd filetype css,scss setlocal iskeyword+=-
 augroup END
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => User functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+command Debug call Pause_test_debug()
+function! Pause_test_debug()
+    let saved_pos = getpos('.') "[bufnum,line,col,off]
+    let line = saved_pos[1]
+    let col = saved_pos[2]
+    let off = saved_pos[3]
+
+    normal! oreturn pauseTest();// unique string plz kill
+
+    if search("import { pauseTest } from '@ember/test-helpers';// unique string plz kill", 'nw') == 0
+        normal! 1GOimport { pauseTest } from '@ember/test-helpers';// unique string plz kill
+    endif
+
+    call cursor(line+1, col, off)
+endfunction
+
+command Clean call Clean_debug()
+function! Clean_debug()
+    let saved_pos = getpos('.') "[bufnum,line,col,off]
+    let line = saved_pos[1]
+    let col = saved_pos[2]
+    let off = saved_pos[3]
+
+    global#// unique string plz kill#d
+    
+    call cursor(line-1, col, off)
+endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

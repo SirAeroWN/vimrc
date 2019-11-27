@@ -8,7 +8,7 @@
 let s:vim_runtime = expand('<sfile>:p:h')
 call plug#begin(s:vim_runtime.'/plugs')
 " linter
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 
 " file and buffer navigation
 Plug 'jlanzarotta/bufexplorer'
@@ -33,17 +33,24 @@ Plug 'tpope/vim-commentary'
 " other
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
+Plug 'chrisbra/NrrwRgn'
 
 " autocomplete
 if has("nvim")
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'Shougo/neco-syntax'
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+  Plug 'deoplete-plugins/deoplete-jedi'
 else
   Plug 'https://gitlab.com/yramagicman/auto-omnicomplete.git'
 endif
 
 " motions
 Plug 'easymotion/vim-easymotion'
+Plug '~/lib/jumpy.vim'
 
 " repl
 
@@ -55,6 +62,7 @@ Plug 'sheerun/vim-polyglot'
 " colorschemes
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'gruvbox-community/gruvbox'
+Plug 'severij/vadelma'
 Plug 'vim-scripts/AfterColors.vim'
 
 " non colorscheme visual things
@@ -159,7 +167,8 @@ endfunction
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8'],
-\   'go': ['go', 'golint', 'errcheck']
+\   'go': ['go', 'golint', 'errcheck'],
+\   'html.handlebars': ['/home/wnorvelle/.nvm/versions/node/v10.16.3/bin/ember-template-lint']
 \}
 
 let g:ale_lint_delay = 100
@@ -179,7 +188,6 @@ autocmd FileType html.handlebars setlocal commentstring={{!--\ %s\ --}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => gruvbox
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" use gruvbox if we can, but fall back to desert if we have to
 try
   if (has('termguicolors'))
     set termguicolors
@@ -192,6 +200,18 @@ try
 catch
 endtry
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vadelma
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" try
+"   if (has('termguicolors'))
+"     set termguicolors
+"   endif
+"     let g:lightline.colorscheme = 'vadelma'
+"     colorscheme vadelma
+" catch
+" endtry
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Startify
@@ -250,3 +270,16 @@ endif
 " => matchit.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 runtime! macros/matchit.vim
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => LanguageClient
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['/home/wnorvelle/.nvm/versions/node/v10.16.3/bin/javascript-typescript-stdio'],
+    \ 'css': ['/home/wnorvelle/.nvm/versions/node/v10.16.3/bin/css-languageserver', 'stdio'],
+    \ 'scss': ['/home/wnorvelle/.nvm/versions/node/v10.16.3/bin/css-languageserver', 'stdio']
+    \ }
+nnoremap <leader>l :call LanguageClient_contextMenu()<CR>
+nnoremap K :call LanguageClient#textDocument_hover()<CR>
+nnoremap gd :call LanguageClient#textDocument_definition()<CR>

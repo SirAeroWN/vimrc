@@ -142,9 +142,9 @@ inoremap <expr> <tab> pumvisible() ? "<c-n>" : "<tab>"
 
 " use control-space (same as <c-@>) to paste in insert mode
 if has('nvim')
-  inoremap <C-Space> <C-r>*
+  inoremap <C-Space> <C-r>"
 else
-  inoremap <c-@> <C-r>*
+  inoremap <c-@> <C-r>"
 endif
 
 vnoremap p "_dP
