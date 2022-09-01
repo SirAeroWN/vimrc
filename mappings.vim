@@ -67,6 +67,7 @@ map <leader>ba :bufdo bd<cr>
 
 map <leader>l :bnext<cr>
 map <leader>h :bprevious<cr>
+map <BS> :bnext<cr>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
@@ -108,6 +109,9 @@ noremap <silent> 0 :call FirstCharOrFirstCol()<cr>
 inoremap jj <Esc>
 inoremap jk <Esc>
 
+" make the completion prompt always have a value selected
+"inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
 " normal mode remaps
 "   the Xzz makes the view center on the cursor after the X movement
 nnoremap j jzz
@@ -137,8 +141,8 @@ vnoremap <leader><leader>s y:%s/<C-r>0/
 " toggle paste mode
 nnoremap <leader><leader>p :set paste!<cr>
 
-inoremap <expr> <cr> pumvisible() ? "<c-y><cr>" : "<cr>"
-inoremap <expr> <tab> pumvisible() ? "<c-n>" : "<tab>"
+inoremap <expr> <cr> pumvisible() ? "<c-y>" : "<cr>"
+inoremap <expr> <tab> pumvisible() ? "<c-y>" : "<tab>"
 
 " use control-space (same as <c-@>) to paste in insert mode
 if has('nvim')
@@ -148,6 +152,7 @@ else
 endif
 
 vnoremap p "_dP
+vnoremap P "_dp
 
 if has('mac') || has('macunix')
   nmap <D-j> <M-j>

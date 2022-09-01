@@ -36,17 +36,18 @@ Plug 'tpope/vim-unimpaired'
 Plug 'chrisbra/NrrwRgn'
 
 " autocomplete
-if has("nvim")
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'Shougo/neco-syntax'
-  Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-  Plug 'deoplete-plugins/deoplete-jedi'
-else
-  Plug 'https://gitlab.com/yramagicman/auto-omnicomplete.git'
-endif
+Plug 'vim-scripts/AutoComplPop'
+" if has("nvim")
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"   Plug 'Shougo/neco-syntax'
+"   Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
+"   Plug 'deoplete-plugins/deoplete-jedi'
+" else
+" Plug 'https://gitlab.com/yramagicman/auto-omnicomplete.git'
+" endif
 
 " motions
 Plug 'easymotion/vim-easymotion'
@@ -57,6 +58,8 @@ Plug '~/lib/jumpy.vim'
 " language specific
 Plug 'nvie/vim-flake8',  { 'for': 'python' }
 Plug 'tpope/vim-markdown',  { 'for': 'markdown' }
+" polyglot
+let g:polyglot_disabled = ['markdown', 'python-indent']
 Plug 'sheerun/vim-polyglot'
 
 " colorschemes
@@ -192,11 +195,11 @@ try
   if (has('termguicolors'))
     set termguicolors
   endif
-    let g:lightline.colorscheme = 'gruvbox'
-    let g:gruvbox_contrast_dark = 'hard'
-    let g:gruvbox_italic=1
-    let g:gruvbox_improved_strings = 1
-    colorscheme gruvbox
+  let g:lightline.colorscheme = 'gruvbox'
+  let g:gruvbox_contrast_dark = 'hard'
+  let g:gruvbox_italic=1
+  let g:gruvbox_improved_strings=1
+  colorscheme gruvbox
 catch
 endtry
 
@@ -219,12 +222,18 @@ endtry
 if has('win32') || has('win16')
   let g:startify_bookmarks = [{'v': 'C:\casa\.vim_runtime\vimrc.vim'},
                             \ {'s': 'C:\Users\wnorvelle\Documents\scratch.md'},
-                            \ {'m': 'C:\FALCOR\software\Websites\Web\customer-ember'}
+                            \ {'m': 'C:\FALCOR\software\Websites\Web\customer-ember'},
+                            \ {'i': 'C:\Users\wnorvelle\Desktop\Innovation_week_ideas.md'},
+                            \ {'p': 'C:\Users\wnorvelle\Desktop\perms_cache.md'},
+                            \ {'t': 'C:\Users\wnorvelle\Documents\temp.txt'}
                             \ ]
 else
   let g:startify_bookmarks = [{'v': '/mnt/c/casa/.vim_runtime/vimrc.vim'},
                             \ {'s': '/mnt/c/Users/wnorvelle/Documents/scratch.md'},
-                            \ {'m': '/mnt/c/FALCOR/software/Websites/Web/customer-ember'}
+                            \ {'m': '/mnt/c/FALCOR/software/Websites/Web/customer-ember'},
+                            \ {'i': '/mnt/c/Users/wnorvelle/Desktop/Innovation_week_ideas.md'},
+                            \ {'p': '/mnt/c/Users/wnorvelle/Desktop/perms_cache.md'},
+                            \ {'t': '/mnt/c/Users/wnorvelle/Documents/temp.txt'}
                             \ ]
 endif
 
@@ -232,8 +241,6 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Polyglot
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" polyglot
-let g:polyglot_disabled = ['markdown', 'python-indent']
 
 " polyglot's sub packages
 let g:javascript_plugin_jsdoc = 1
@@ -275,11 +282,11 @@ runtime! macros/matchit.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => LanguageClient
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['/home/wnorvelle/.nvm/versions/node/v10.16.3/bin/javascript-typescript-stdio'],
-    \ 'css': ['/home/wnorvelle/.nvm/versions/node/v10.16.3/bin/css-languageserver', 'stdio'],
-    \ 'scss': ['/home/wnorvelle/.nvm/versions/node/v10.16.3/bin/css-languageserver', 'stdio']
-    \ }
-nnoremap <leader>l :call LanguageClient_contextMenu()<CR>
-nnoremap K :call LanguageClient#textDocument_hover()<CR>
-nnoremap gd :call LanguageClient#textDocument_definition()<CR>
+" let g:LanguageClient_serverCommands = {
+"     \ 'javascript': ['/home/wnorvelle/.nvm/versions/node/v10.16.3/bin/javascript-typescript-stdio'],
+"     \ 'css': ['/home/wnorvelle/.nvm/versions/node/v10.16.3/bin/css-languageserver', 'stdio'],
+"     \ 'scss': ['/home/wnorvelle/.nvm/versions/node/v10.16.3/bin/css-languageserver', 'stdio']
+"     \ }
+" nnoremap <leader>l :call LanguageClient_contextMenu()<CR>
+" nnoremap K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap gd :call LanguageClient#textDocument_definition()<CR>

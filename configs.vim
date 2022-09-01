@@ -40,6 +40,8 @@ set autoread
 " competion options
 set completeopt=menu,menuone,noinsert,noselect
 
+set nofixendofline
+
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
     let save_cursor = getpos('.')
@@ -182,14 +184,14 @@ syntax enable
 
 " Enable 256 colors palette in Gnome Terminal
 if $COLORTERM ==? 'gnome-terminal'
-    set t_Co=256
+    " set t_Co=256
 endif
 
 if (has('termguicolors'))
   set termguicolors
 endif
 
-set t_Co=256
+" set t_Co=256
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
 
@@ -277,6 +279,14 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""
+" => cake section
+""""""""""""""""""""""""""""""
+augroup cake_files
+    autocmd!
+    autocmd BufNewFile,BufRead *.cake setlocal filetype=cs
+augroup END
+
+""""""""""""""""""""""""""""""
 " => Python section
 """"""""""""""""""""""""""""""
 augroup filetype_py
@@ -295,17 +305,17 @@ augroup END
 " => Text files section
 """""""""""""""""""""""""""""""
 augroup text_files
-   autocmd!
+    autocmd!
     " change the previous header
-   autocmd FileType md,markdown,txt onoremap ih :<c-u>execute "normal! ?^[-=]\\{2,}\\+$\r:nohlsearch\rkvg_"<cr>
+    autocmd FileType md,markdown,txt onoremap ih :<c-u>execute "normal! ?^[-=]\\{2,}\\+$\r:nohlsearch\rkvg_"<cr>
     " set indent level to be 2 spaces in markdown
-   autocmd FileType md,markdown,txt setlocal shiftwidth=2
-   autocmd FileType md,markdown,txt setlocal tabstop=2
+    autocmd FileType md,markdown,txt setlocal shiftwidth=2
+    autocmd FileType md,markdown,txt setlocal tabstop=2
     " do spelling for markdown
-   autocmd FileType md,markdown,txt setlocal spell
-   autocmd BufNewFile,BufRead *.md,*.markdown,*.txt setlocal spell
+    autocmd FileType md,markdown,txt setlocal spell
+    autocmd BufNewFile,BufRead *.md,*.markdown,*.txt setlocal spell
     " autocomplete english
-   autocmd FileType md,markdown,txt setlocal complete+=kspell
+    autocmd FileType md,markdown,txt setlocal complete+=kspell
 augroup END
 
 
@@ -389,6 +399,19 @@ function! Clean_debug()
     global#// unique string plz kill#d
     
     call cursor(line-1, col, off)
+endfunction
+
+command Test call Hermes_run("test")
+
+command Build call Hermes_run("build")
+
+function! Hermes_run(switch)
+    if has("win16") || has("win32")
+        let path = "C:\Users\wnorvelle\Code\vim_hermes_client\client.py"
+    else
+        let path = "/mnt/c/Users/wnorvelle/Code/vim_hermes_client/client.py"
+    endif
+    execute "silent !python3.8 " . path . " --" . a:switch . " " . expand('%:p')
 endfunction
 
 
