@@ -123,6 +123,8 @@ nnoremap N Nzz
 " H and L move to the beginning and end of the current line, respectively
 nnoremap H :call FirstCharOrFirstCol()<cr>
 nnoremap L $
+vnoremap H :call FirstCharOrFirstCol()<cr>
+vnoremap L $
 
 " very magic searching
 nnoremap \ /\v

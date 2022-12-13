@@ -38,7 +38,7 @@ filetype indent on
 set autoread
 
 " competion options
-set completeopt=menu,menuone,noinsert,noselect
+set completeopt=menu,menuone,noinsert,noselect,longest
 
 set nofixendofline
 
