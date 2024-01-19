@@ -103,7 +103,7 @@ set whichwrap+=<,>,h,l
 " Ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases 
+" When searching try to be smart about cases
 set smartcase
 
 " Highlight search results
@@ -119,7 +119,7 @@ set lazyredraw
 set magic
 
 " Show matching brackets when text indicator is over them
-set showmatch 
+set showmatch
 
 " How many tenths of a second to blink when matching brackets
 set matchtime=2
@@ -134,7 +134,9 @@ set timeoutlen=500
 set foldcolumn=1
 
 " show line numbers
-set number
+"set number
+" show relative line numbers with the absolute number at the cursor line
+set number relativenumber
 
 " new horizontal spits show up at the bottom
 set splitbelow
@@ -210,6 +212,12 @@ if has('gui_running')
     set t_Co=256
     set guitablabel=%M\ %t
 endif
+
+" This MUST come after all the other cursor and color settings
+let &t_SI.="\e[5 q"  "t_SI = Start INSERT mode
+let &t_SR.="\e[4 q"  "t_SR = Start REPLACE mode
+let &t_EI.="\e[1 q"  "t_EI = End Insert mode - usually starts NORMAL mode
+let &t_te.="\e[0 q"  " Reset the cursor to whatever the console was using
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

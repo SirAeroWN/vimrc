@@ -13,7 +13,8 @@ Plug 'dense-analysis/ale'
 " file and buffer navigation
 Plug 'jlanzarotta/bufexplorer'
 Plug 'yegappan/mru'
-Plug 'junegunn/fzf',  { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf'
+" Plug 'junegunn/fzf',  { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-vinegar'
 
@@ -34,6 +35,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'chrisbra/NrrwRgn'
+Plug 'vim-scripts/RltvNmbr.vim'
 
 " autocomplete
 Plug 'vim-scripts/AutoComplPop'
